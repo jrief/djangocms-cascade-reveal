@@ -1,0 +1,3 @@
+{% if request.user.is_authenticated %}
+<aside class="notes">{{ instance.glossary.notes }}</aside>
+{% endif %}

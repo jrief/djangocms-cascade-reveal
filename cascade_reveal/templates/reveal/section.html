@@ -1,0 +1,10 @@
+{% load cms_tags %}
+{% if not instance.glossary.hide %}
+	{% with css_classes=instance.css_classes inline_styles=instance.inline_styles %}
+<section class="{{ css_classes }}"{% if inline_styles %} style="{{ inline_styles }}"{% endif %}>
+	{% for plugin in instance.child_plugin_instances %}
+		{% render_plugin plugin %}
+	{% endfor %}
+</section>
+	{% endwith %}
+{% endif %}

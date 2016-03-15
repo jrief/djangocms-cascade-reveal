@@ -1,0 +1,72 @@
+{% load static cms_tags cms_js_tags sekizai_tags sass_tags %}
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>reveal.js – The HTML Presentation Framework</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	{% render_block "css" postprocessor "compressor.contrib.sekizai.compress" %}
+</head>
+
+{% addtoblock "css" %}<link rel="stylesheet" href="{% sass_src 'reveal/css/reveal.scss' %}">{% endaddtoblock %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'reveal/css/theme/black.css' %}" id="theme">{% endaddtoblock %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'reveal/lib/css/zenburn.css' %}">{% endaddtoblock %}
+
+{% addtoblock "js" %}<script src="{% static 'reveal/lib/js/head.min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'reveal/js/reveal.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'bower_components/underscore/underscore-min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}
+<script>
+	// Full list of configuration options available at:
+	// https://github.com/hakimel/reveal.js#configuration
+	var options = {
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+		transition: 'slide',
+
+		// Optional reveal.js plugins
+		dependencies: [
+			{ src: "{% static 'reveal/lib/js/classList.js' %}", condition: function() { return !document.body.classList; } },
+			{ src: "{% static 'reveal/plugin/highlight/highlight.js' %}", async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+			{ src: "{% static 'reveal/plugin/zoom-js/zoom.js' %}", async: true },
+			{ src: "{% static 'reveal/plugin/notes/notes.js' %}", async: true }
+		]
+	};
+	_.extend(options, {{ request.current_page.revealextension.options|json }});
+	console.log(options);
+	Reveal.initialize(options);
+</script>
+{% endaddtoblock %}
+
+<body>
+	{% cms_toolbar %}
+	<div class="reveal">
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+		{% placeholder "Presentation Slides" inherit or %}
+			<section>
+				<h1>Cascade-Reveal</h1>
+				<h3>HTML Presentations in djangoCMS</h3>
+				<p>
+					<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+				</p>
+			</section>
+		{% endplaceholder %}
+		</div>
+	</div>
+
+	{% render_block "js" postprocessor "compressor.contrib.sekizai.compress" %}
+</body>
+
+</html>
