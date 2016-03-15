@@ -42,9 +42,10 @@ setup(
     zip_safe=False,
     install_requires=[
         'markdown',
-        'djangocms-admin-style',
-        'django-cms>=3.2.0',
-        'djangocms-cascade>=0.7.2',
+        'django<1.10',
+        'djangocms-admin-style<1',
+        'django-cms>=3.2.3',
+        'djangocms-cascade>=0.7.3',
         'django-filer',
         'djangocms-text-ckeditor',
         'django-compressor',
