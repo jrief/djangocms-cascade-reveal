@@ -18,10 +18,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('options', jsonfield.fields.JSONField(default={}, blank=True)),
                 ('extended_object', models.OneToOneField(editable=False, to='cms.Page')),
-                ('public_extension', models.OneToOneField(related_name='draft_extension', null=True, editable=False, to='cascade_reveal.RevealExtension')),
+                ('public_extension', models.OneToOneField(related_name='draft_extension', null=True, editable=False, to='cmsplugin_reveal.RevealExtension')),
             ],
             options={
-                'abstract': False,
+                'db_table': 'cmsplugin_cascade_reveal',
+                'verbose_name': 'Reveal Option',
+                'verbose_name_plural': 'Reveal Options',
             },
         ),
     ]

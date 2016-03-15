@@ -10,6 +10,7 @@ class RevealExtension(PageExtension):
     options = JSONField(blank=True, default={})
 
     class Meta:
+        db_table = 'cmsplugin_cascade_reveal'
         verbose_name = "Reveal Option"
         verbose_name_plural = "Reveal Options"
 

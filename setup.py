@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from setuptools import setup, find_packages
-from cascade_reveal import __version__
+from cmsplugin_reveal import __version__
 try:
     from pypandoc import convert
 except ImportError:
@@ -41,8 +41,13 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'markdown',
+        'djangocms-admin-style',
         'django-cms>=3.2.0',
-        'djangocms-cascade>=0.7.3',
+        'djangocms-cascade>=0.7.2',
+        'django-filer',
+        'djangocms-text-ckeditor',
+        'django-compressor',
         'django-sass-processor>=0.3.4',
     ],
 )

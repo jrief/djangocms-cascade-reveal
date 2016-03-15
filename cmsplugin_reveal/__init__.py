@@ -3,4 +3,4 @@ from __future__ import unicode_literals
 
 __version__ = '0.0.1'
 
-default_app_config = 'cascade_reveal.apps.RevealConfig'
+default_app_config = 'cmsplugin_reveal.apps.RevealConfig'

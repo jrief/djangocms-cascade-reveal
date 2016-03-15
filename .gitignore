@@ -19,6 +19,7 @@ lib/
 distribute*
 share/
 *.sqlite
+*.sqlite3
 database.db
 *.swp
 .DS_store
