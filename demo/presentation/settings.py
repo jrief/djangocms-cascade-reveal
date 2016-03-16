@@ -212,7 +212,13 @@ CKEDITOR_SETTINGS = {
 for priv_attr in ('DATABASES', 'SECRET_KEY', 'MEDIA_ROOT', 'STATIC_ROOT'):
     try:
         from . import private_settings
-        vars()[priv_attr].update(getattr(private_settings, priv_attr))
+        priv_value = getattr(private_settings, priv_attr)
+        if isinstance(vars()[priv_attr], dict):
+            vars()[priv_attr].update(priv_value)
+        elif isinstance(vars()[priv_attr], (list, tuple)):
+            vars()[priv_attr].append(priv_value)
+        else:
+            vars()[priv_attr] = priv_value
     except AttributeError:
         continue
     except KeyError:
