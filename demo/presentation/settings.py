@@ -178,9 +178,8 @@ CMS_PLACEHOLDER_CONF = {
     }
 }
 
-
 #CMSPLUGIN_CASCADE_PLUGINS = ('cmsplugin_cascade.segmentation', 'cmsplugin_cascade.generic',
-#    'cmsplugin_cascade.link', 'shop.cascade', 'cmsplugin_cascade.bootstrap3',)
+#    'cmsplugin_cascade.link', 'cmsplugin_cascade.bootstrap3',)
 
 CMSPLUGIN_CASCADE = {
     'alien_plugins': ('TextPlugin', 'TextLinkPlugin',),
@@ -189,12 +188,6 @@ CMSPLUGIN_CASCADE = {
         'HorizontalRulePlugin',
     ),
 }
-
-#CMSPLUGIN_CASCADE_LINKPLUGIN_CLASSES = (
-#    'shop.cascade.plugin_base.CatalogLinkPluginBase',
-#    'cmsplugin_cascade.link.plugin_base.LinkElementMixin',
-#    'shop.cascade.plugin_base.CatalogLinkForm',
-#)
 
 CKEDITOR_SETTINGS = {
     'language': '{{ language }}',
@@ -214,3 +207,15 @@ CKEDITOR_SETTINGS = {
         ['Source']
     ],
 }
+
+# merge settings with non-public credentioals in private_settings
+for priv_attr in ('DATABASES', 'SECRET_KEY'):
+    try:
+        from . import private_settings
+        vars()[priv_attr].update(getattr(private_settings, priv_attr))
+    except AttributeError:
+        continue
+    except KeyError:
+        vars()[priv_attr] = getattr(private_settings, priv_attr)
+    except ImportError:
+        break
