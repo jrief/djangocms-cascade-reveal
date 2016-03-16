@@ -14,8 +14,6 @@ dist
 *egg-info*
 htmlcov
 bin/
-include/
-lib/
 distribute*
 share/
 *.sqlite
