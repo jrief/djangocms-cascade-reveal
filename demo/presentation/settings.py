@@ -209,7 +209,7 @@ CKEDITOR_SETTINGS = {
 }
 
 # merge settings with non-public credentioals in private_settings
-for priv_attr in ('DATABASES', 'SECRET_KEY'):
+for priv_attr in ('DATABASES', 'SECRET_KEY', 'MEDIA_ROOT', 'STATIC_ROOT'):
     try:
         from . import private_settings
         vars()[priv_attr].update(getattr(private_settings, priv_attr))
