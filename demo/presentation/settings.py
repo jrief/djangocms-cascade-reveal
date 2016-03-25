@@ -17,7 +17,6 @@ import os
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print BASE_DIR
 
 # Directory where working files, such as media and databases are kept
 WORK_DIR = os.path.join(BASE_DIR, os.path.pardir, 'workdir')
@@ -150,10 +149,6 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
 ############################################
 # settings for django-cms and its plugins
 
@@ -208,20 +203,8 @@ CKEDITOR_SETTINGS = {
     ],
 }
 
-# merge settings with non-public credentioals in private_settings
-for priv_attr in ('DATABASES', 'SECRET_KEY', 'MEDIA_ROOT', 'STATIC_ROOT'):
-    try:
-        from . import private_settings
-        priv_value = getattr(private_settings, priv_attr)
-        if isinstance(vars()[priv_attr], dict):
-            vars()[priv_attr].update(priv_value)
-        elif isinstance(vars()[priv_attr], (list, tuple)):
-            vars()[priv_attr].append(priv_value)
-        else:
-            vars()[priv_attr] = priv_value
-    except AttributeError:
-        continue
-    except KeyError:
-        vars()[priv_attr] = getattr(private_settings, priv_attr)
-    except ImportError:
-        break
+try:
+    from .private_settings import *
+except ImportError:
+    pass
+
