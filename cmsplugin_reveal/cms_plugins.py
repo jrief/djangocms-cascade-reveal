@@ -72,6 +72,9 @@ class RevealMarkDownPlugin(CascadePluginBase):
         ),
     )
 
+    class Media:
+        css = {'all': ('reveal/css/admin.css',)}
+
     def render(self, context, instance, placeholder):
         context = super(RevealMarkDownPlugin, self).render(context, instance, placeholder)
         content = unescape_entities(instance.glossary.get('markdown', ''))
