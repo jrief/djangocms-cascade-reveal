@@ -14,7 +14,10 @@ except ImportError:
 import markdown
 from cms.plugin_pool import plugin_pool
 from cmsplugin_cascade.fields import PartialFormField
+from cmsplugin_cascade.mixins import ImagePropertyMixin
 from cmsplugin_cascade.plugin_base import CascadePluginBase
+from cmsplugin_cascade.widgets import CascadingSizeWidget
+from cmsplugin_cascade.bootstrap3.image import ImageForm
 
 
 class RevealSectionPlugin(CascadePluginBase):
@@ -108,3 +111,42 @@ class RevealSpeakerNotePlugin(CascadePluginBase):
         return super(RevealSpeakerNotePlugin, self).get_form(request, obj, **kwargs)
 
 plugin_pool.register_plugin(RevealSpeakerNotePlugin)
+
+
+class RevealImagePlugin(CascadePluginBase):
+    name = _("Image")
+    module = 'Reveal'
+    model_mixins = (ImagePropertyMixin,)
+    render_template = 'reveal/image.html'
+    require_parent = True
+    parent_classes = ('RevealSectionPlugin',)
+    allow_children = False
+    raw_id_fields = ('image_file',)
+    text_enabled = True
+    admin_preview = False
+    form = ImageForm
+    glossary_fields = (
+        PartialFormField('image-width',
+            CascadingSizeWidget(allowed_units=['px', '%'], required=False),
+            label=_("Image Width"),
+            help_text=_("Set a fixed image width in pixels."),
+        ),
+        PartialFormField('image-height',
+            CascadingSizeWidget(allowed_units=['px', '%'], required=False),
+            label=_("Image Height"),
+            help_text=_("Set a fixed height in pixels, or percent relative to the image width."),
+        ),
+    )
+
+    def render(self, context, instance, placeholder):
+        glossary = dict(instance.get_complete_glossary())
+        #    extra_styles = tags.pop('extra_styles')
+        inline_styles = instance.glossary.get('inline_styles', {})
+        # inline_styles.update(extra_styles)
+        # instance.glossary['inline_styles'] = inline_styles
+        size = (960, 600)
+        src = {'size': size, 'crop': False}
+        context.update(dict(instance=instance, src=src, placeholder=placeholder))
+        return context
+
+plugin_pool.register_plugin(RevealImagePlugin)

@@ -1,0 +1,4 @@
+{% load thumbnail %}
+{% thumbnail instance.image src.size crop=src.crop as thumb %}
+<img {% if inline_styles %} style="{{ inline_styles }}"{% endif %}
+	src="{{ thumb.url }}"{% if not sizes %} width="{{ thumb.width }}" height="{{ thumb.height }}"{% endif %} />
