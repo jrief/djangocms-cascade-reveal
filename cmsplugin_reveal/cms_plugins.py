@@ -79,7 +79,6 @@ class RevealMarkDownPlugin(CascadePluginBase):
         context = super(RevealMarkDownPlugin, self).render(context, instance, placeholder)
         content = unescape_entities(instance.glossary.get('markdown', ''))
         context['html_content'] = mark_safe(markdown.markdown(content))
-        print context['html_content']
         return context
 
 plugin_pool.register_plugin(RevealMarkDownPlugin)
