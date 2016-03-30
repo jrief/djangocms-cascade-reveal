@@ -39,6 +39,7 @@ class RevealSectionPlugin(CascadePluginBase):
     @classmethod
     def get_identifier(cls, instance):
         identifier = super(RevealSectionPlugin, cls).get_identifier(instance)
+        identifier = "{} {}".format(identifier, instance.get_position_in_placeholder())
         if instance.glossary.get('hide'):
             return format_html('{} hidden', identifier)
         return identifier
