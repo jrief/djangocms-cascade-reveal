@@ -46,6 +46,18 @@ class RevealExtensionAdmin(PageExtensionAdmin):
             label=_("Transition"),
             help_text=_("Transitions style for changing slides."),
         ),
+        PartialFormField('width',
+            widgets.NumberInput(),
+            label=_("Width"),
+            initial=960,
+            help_text=_("Slide width"),
+        ),
+        PartialFormField('height',
+            widgets.NumberInput(),
+            label=_("Height"),
+            initial=700,
+            help_text=_("Slide height"),
+        ),
     ),)
 
     class Media:

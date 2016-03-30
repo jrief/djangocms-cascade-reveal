@@ -118,7 +118,7 @@ class RevealImagePlugin(CascadePluginBase):
     model_mixins = (ImagePropertyMixin,)
     render_template = 'reveal/image.html'
     require_parent = True
-    parent_classes = ('RevealSectionPlugin',)
+    parent_classes = ('RevealSectionPlugin', 'SimpleWrapperPlugin',)
     allow_children = False
     raw_id_fields = ('image_file',)
     text_enabled = True
