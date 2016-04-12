@@ -29,6 +29,9 @@ class RevealSectionPlugin(CascadePluginBase):
     allow_children = True
     child_classes = None
     alien_child_classes = True
+    model_mixins = (ImagePropertyMixin,)
+    form = ImageForm
+    raw_id_fields = ('image_file',)
     glossary_fields = (
         PartialFormField('hide',
             widgets.CheckboxInput(),
