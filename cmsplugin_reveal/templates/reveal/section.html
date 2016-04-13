@@ -1,6 +1,8 @@
 {% load cms_tags thumbnail %}
 {% if not instance.glossary.hide %}
-	{% if instance.image %}{% thumbnail instance.image 1200x1024 crop=0 as thumb %}{% endif %}
+	{% with crop=instance.glossary.crop|default:0 %}
+		{% if instance.image %}{% thumbnail instance.image 1200x1024 crop=crop as thumb %}{% endif %}
+	{% endwith %}
 	{% with css_classes=instance.css_classes inline_styles=instance.inline_styles background=instance.glossary.background %}
 <section class="{{ css_classes }}"{% if inline_styles %} style="{{ inline_styles }}"{% endif %}{% if thumb %} data-background="{{ thumb.url }}"{% endif %}>
 	{% for plugin in instance.child_plugin_instances %}

@@ -37,6 +37,10 @@ class RevealSectionPlugin(CascadePluginBase):
             widgets.CheckboxInput(),
             label=_("Hide this slide")
         ),
+        PartialFormField('crop',
+            widgets.CheckboxInput(),
+            label=_("Crop image")
+        ),
     )
 
     @classmethod
